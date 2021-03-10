@@ -1,12 +1,20 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+filetype plugin on
+
+set sidescroll=1
+
 set whichwrap+=<,>,[,]
+
+let g:jedi#popup_on_dot = 0
 
 let g:pymode_lint_ignore = "E501,W"
 let g:pymode_options_max_line_length=0
 let g:pymode_lint = 1
 let g:pymode_lint_on_fly = 1
+
+let g:vim_markdown_folding_disabled = 1
 
 " установить tab равным 4 пробелам
 set ts=4
@@ -94,8 +102,9 @@ Plugin 'nvie/vim-flake8'
 Plugin 'Raimondi/delimitMate'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'davidhalter/jedi-vim'
-" Plugin 'othree/vim-autocomplpop'
-" Plugin 'vim-scripts/L9'
+Plugin 'godlygeek/tabular' " for work with markdown plugin (Ctrl-p) - https://github.com/godlygeek/tabular
+Plugin 'plasticboy/vim-markdown' " best markdown plugin - https://github.com/plasticboy/vim-markdown
+
 Plugin 'klen/python-mode'
 Plugin 'ervandew/supertab'
 
@@ -131,3 +140,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" vim markdown plugin options - https://github.com/plasticboy/vim-markdown
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_json_frontmatter = 1
+let g:vim_markdown_edit_url_in = 'tab'
