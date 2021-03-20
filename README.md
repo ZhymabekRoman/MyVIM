@@ -13,3 +13,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
 vim +PluginInstall +qall
 ```
+3) Install Python linters and code fixers:
+```
+pip3 install yapf pylint flake8 black autopep8
+```
