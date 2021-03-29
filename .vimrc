@@ -38,16 +38,19 @@ Plugin 'sonph/onehalf', {'rtp': 'vim/'}
 "Plugin 'glepnir/oceanic-material'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'dominikduda/vim_current_word'
 Plugin 'preservim/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'machakann/vim-highlightedyank'
 Plugin 'Raimondi/delimitMate'
 Plugin 'wakatime/vim-wakatime'
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'ervandew/supertab'
 Plugin 'dense-analysis/ale'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -57,6 +60,13 @@ set background=dark
 
 colorscheme onedark
 "colorscheme onehalfdark
+
+" Uncomment the following to have Vim jump to the last position when                                                       
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
 
 " Ctrl-Left or Ctrl-Right to go to the previous or next tabs
 nnoremap <C-Left> :tabprevious<CR>
@@ -73,9 +83,11 @@ set nowrap
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 " Check Python files with flake8 and pylint.
-let b:ale_linters = ['flake8', 'pylint']
+let b:ale_linters = ['flake8', 'pylint', 'golint']
 " Fix Python files with autopep8 and yapf.
 let b:ale_fixers = ['autopep8', 'yapf']
+let g:ale_python_flake8_executable = 'python3'
+let g:ale_python_flake8_options = '-m flake8 --ignore E501'
 " Disable warnings about trailing whitespace for Python files.
 let b:ale_warn_about_trailing_whitespace = 1
 let g:ale_echo_msg_error_str = 'E'
@@ -83,6 +95,8 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
+
+let g:ale_go_golint_executable = '/data/sdext2/data/com.termux/files/home/go/bin/golint'
 
 " ale fix key binding
 noremap <F9> :ALEFix <CR>
@@ -95,10 +109,10 @@ let g:highlightedyank_highlight_duration = 1000
 " установить tab равным 4 пробелам
 set ts=4
 
-autocmd FileType python setlocal completeopt-=preview
-let g:jedi#completions_command = "<F3>"
-let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = "1"
+"autocmd FileType python setlocal completeopt-=preview
+"let g:jedi#completions_command = "<F3>"
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#show_call_signatures = "1"
 
 " выделять строку, на которой находится курсор
 set cursorline
@@ -150,15 +164,24 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 " показывать только номер вкладки
 let g:airline#extensions#tabline#tab_nr_type = 1
 
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
-
-" Make trailing whitespace be flagged as bad.
-au BufRead, BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
 " vim markdown plugin options - https://github.com/plasticboy/vim-markdown
 let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_json_frontmatter = 1
 let g:vim_markdown_edit_url_in = 'tab'
 let g:vim_markdown_folding_disabled = 1
 
+hi CurrentWordTwins ctermfg=4 cterm=underline
+let g:vim_current_word#highlight_current_word = 0
+autocmd BufAdd NERD_tree_*,*.rb,*.js :let b:vim_current_word_disabled_in_this_buffer = 1
+let g:vim_current_word#disabled_by_insert_mode = 0
+
+" Make trailing whitespace be flagged as bad.
+" Use the below highlight group when displaying bad whitespace is desired.
+highlight BadWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+
+set list
