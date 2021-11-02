@@ -28,7 +28,9 @@ set cmdheight=2
 " подстветка синаксиса
 syntax on
 " Show all whitespace as a character
-set list
+" :set listchars=eol:⏎,tab:>-,trail:·,extends:>,precedes:<
+:set listchars=tab:>-,space:·,nbsp:␣,trail:•,eol:⏎,precedes:«,extends:»
+:set list
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=1000
@@ -59,6 +61,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'mhinz/vim-startify'
+Plugin 'Yggdroot/indentLine'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -74,8 +77,8 @@ if has("autocmd")
 endif
 
 " Ctrl-Left or Ctrl-Right to go to the previous or next tabs
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
+nnoremap <F3> :tabprevious<CR>
+nnoremap <F9> :tabnext<CR>
 " Alt-Left or Alt-Right to move the current tab to the left or right
 nnoremap <silent> <C-Down> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <C-Up> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
@@ -280,4 +283,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
