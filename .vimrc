@@ -1,5 +1,5 @@
-" :CocInstall :CocInstall coc-pyright coc-html coc-css
-" :CocConfig
+" :CocInstall :CocInstall coc-jedi coc-html coc-css
+" Open config file with :CocConfig and add:
 " "diagnostic.checkCurrentLine": true
 
 set nocompatible              " be iMproved, required
@@ -29,8 +29,8 @@ set cmdheight=2
 syntax on
 " Show all whitespace as a character
 " :set listchars=eol:⏎,tab:>-,trail:·,extends:>,precedes:<
-:set listchars=tab:>-,space:·,nbsp:␣,trail:•,eol:⏎,precedes:«,extends:»
-:set list
+" ":set listchars=tab:>-,space:·,nbsp:␣,trail:•,eol:⏎,precedes:«,extends:»
+" ":set list
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=1000
@@ -41,32 +41,45 @@ set ts=4
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'sonph/onehalf', {'rtp': 'vim/'}
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'RRethy/vim-illuminate'
-Plugin 'preservim/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'machakann/vim-highlightedyank'
-Plugin 'Raimondi/delimitMate'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-Plugin 'mhinz/vim-startify'
-Plugin 'Yggdroot/indentLine'
-
-call vundle#end()            " required
+call plug#begin()
+Plug 'sonph/onehalf', {'rtp': 'vim/'}  " theme
+Plug 'vim-airline/vim-airline'  " status and tabline
+Plug 'vim-airline/vim-airline-themes'  " theme for status and tabline
+Plug 'RRethy/vim-illuminate'  " highlight same word under cursor
+Plug 'preservim/nerdtree'  " file manager
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'machakann/vim-highlightedyank'  " report yanked range
+Plug 'Raimondi/delimitMate'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mhinz/vim-startify'
+Plug 'Yggdroot/indentLine'
+Plug 'dense-analysis/ale'
+call plug#end()            " required
 filetype plugin indent on    " required
 
-let g:Illuminate_ftblacklist = ['nerdtree']
+let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_color_term = 160
+
+let g:airline#extensions#ale#enabled = 1
+" Check Python files with flake8 and pylint.
+let b:ale_linters = ['flake8', 'pylint']
+let g:ale_python_flake8_executable = 'python3'
+let g:ale_python_flake8_options = '-m flake8 --ignore E501'
+" Fix Python files with autopep8 and yapf.
+let b:ale_fixers = ['autopep8', 'yapf']
+" Disable warnings about trailing whitespace for Python files.
+let b:ale_warn_about_trailing_whitespace = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+
+" ale fix key binding
+noremap <F9> :ALEFix <CR>
 
 colorscheme onehalfdark
 
@@ -76,55 +89,54 @@ if has("autocmd")
     \| exe "normal! g'\"" | endif
 endif
 
+" Show startify when opening new tab
+autocmd VimEnter * let t:startify_new_tab = 1
+autocmd BufEnter *
+    \ if !exists('t:startify_new_tab') && empty(expand('%')) |
+    \   let t:startify_new_tab = 1 |
+    \   Startify |
+    \ endif
+
 " Ctrl-Left or Ctrl-Right to go to the previous or next tabs
 nnoremap <F3> :tabprevious<CR>
 nnoremap <F9> :tabnext<CR>
+
 " Alt-Left or Alt-Right to move the current tab to the left or right
 nnoremap <silent> <C-Down> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
 nnoremap <silent> <C-Up> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
 
+" F6 - trig NERDTreeToggle
 nmap <F6> :NERDTreeToggle<CR>
 
 hi HighlightedyankRegion cterm=reverse gui=reverse
+" set highlight duration time to 500 ms
+let g:highlightedyank_highlight_duration = 500
 
-" set highlight duration time to 1000 ms, i.e., 1 second
-let g:highlightedyank_highlight_duration = 1000
-
-let g:airline_theme='deus'
-" let g:airline_theme='onehalfdark'
-
-" использовать пропатченные шрифты
-let g:airline_powerline_fonts = 0
-
+" let g:airline_theme='deus'
+let g:airline_theme='onehalfdark'
+" использовать пропатченные шрифты (должны быть установлены Agave Nerd Font)
+let g:airline_powerline_fonts = 1
 " включить управление табами
 let g:airline#extensions#tabline#enabled = 1
-
 " всегда показывать tabline
 let g:airline#extensions#tabline#tab_min_count = 0
-
 "" такое же поведение, как и в sublime: если файл с уникальным именем - показывается только имя, если встречается файл с таким же именем, отображается также и директория
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-
 " скрыть буферы
 let g:airline#extensions#tabline#show_buffers = 0
-
 " имя файла + расширение :help filename-modifiers
 let g:airline#extensions#tabline#fnamemod = ':t'
-
 " для закрытия вкладки мышью (мышью!?)
 let g:airline#extensions#tabline#show_close_button = 1
-
 " убираем разделитель для вкладок
 let g:airline#extensions#tabline#left_alt_sep = ''
-
 " отключаем tagbar
 let g:airline#extensions#tagbar#enabled = 0
-
 " показывать номер вкладки
 let g:airline#extensions#tabline#show_tab_nr = 1
-
 " показывать только номер вкладки
 let g:airline#extensions#tabline#tab_nr_type = 1
+
 
 " vim markdown plugin options - https://github.com/plasticboy/vim-markdown
 let g:vim_markdown_frontmatter = 1
@@ -136,6 +148,8 @@ augroup illuminate_augroup
     autocmd!
     autocmd VimEnter * hi illuminatedWord ctermfg=74 cterm=underline
 augroup END
+let g:Illuminate_delay = 200
+let g:Illuminate_ftblacklist = ['nerdtree']
 
 " Make trailing whitespace be flagged as bad.
 " Use the below highlight group when displaying bad whitespace is desired.
@@ -146,28 +160,19 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 
-" Time in milliseconds (default 0)
-let g:Illuminate_delay = 200
-
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+noremap <silent><expr> <c-@> coc#refresh()
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin

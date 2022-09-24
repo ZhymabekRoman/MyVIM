@@ -2,16 +2,10 @@
 My VIM config files
 
 0) Exctract .vimrc file to home directory
-1) Install Vundle
-
+1) Install VimPlug: https://github.com/junegunn/vim-plug
+2) Install plugins:
 ```
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-```
-
-2) Run Vundle plugin install command
-
-```
-vim +PluginInstall +qall
+PlugInstall
 ```
 3) Install Python linters and code fixers:
 ```
