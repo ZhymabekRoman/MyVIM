@@ -1,4 +1,4 @@
-" :CocInstall :CocInstall coc-jedi coc-html coc-css
+" :CocInstall :CocInstall coc-jedi coc-html coc-css coc-sh
 " Open config file with :CocConfig and add:
 " "diagnostic.checkCurrentLine": true
 
