@@ -271,6 +271,16 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+" copy to buffer
+vmap <C-c> :w! ~/.vimbuffer<CR>
+nmap <C-c> :.w! ~/.vimbuffer<CR>
+" paste from buffer
+map <C-p> :r ~/.vimbuffer<CR>
+
+
+vmap <leader>y :w! ~/.vimsharedbuffer/.vimbuffer<CR>
+nmap <leader>p :r! cat ~/.vimsharedbuffer/.vimbuffer<CR>
+
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -288,3 +298,6 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" Doesn't allow use Ctrl-Z (some bugs in fish)
+map <C-z> <Nop>
