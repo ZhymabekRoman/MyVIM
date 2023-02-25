@@ -301,3 +301,5 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Doesn't allow use Ctrl-Z (some bugs in fish)
 map <C-z> <Nop>
+" Disable quote concealing in JSON files
+let g:vim_json_conceal=0
