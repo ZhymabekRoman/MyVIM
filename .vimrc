@@ -5,7 +5,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin on
+
 set noshowmode
+"for example, the cursor is on line 15 and the "scrolloff" option is set to 7, Vim will ensure that there are at least 7 lines visible above and below the cursor when scrolling.
 set scrolloff=7
 " выделять строку, на которой находится курсор
 set cursorline
@@ -27,14 +29,12 @@ set nowritebackup
 set cmdheight=2
 " подстветка синаксиса
 syntax on
-" Show all whitespace as a character
-" :set listchars=eol:⏎,tab:>-,trail:·,extends:>,precedes:<
-" ":set listchars=tab:>-,space:·,nbsp:␣,trail:•,eol:⏎,precedes:«,extends:»
-" ":set list
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" Having longer updatetime (default is 1000 ms = 1 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=1000
+" Позволяет курсору переходить на следующую строку после конца строчки
 set whichwrap+=<,>,[,]
+" Не переносить строку
 set nowrap
 " установить tab равным 4 пробелам
 set ts=4
@@ -42,7 +42,8 @@ set ts=4
 set shortmess+=c
 
 call plug#begin()
-Plug 'sonph/onehalf', {'rtp': 'vim/'}  " theme
+" Plug 'sonph/onehalf', {'rtp': 'vim/'}  " theme
+Plug 'igorgue/danger'
 Plug 'vim-airline/vim-airline'  " status and tabline
 Plug 'vim-airline/vim-airline-themes'  " theme for status and tabline
 Plug 'RRethy/vim-illuminate'  " highlight same word under cursor
@@ -52,7 +53,7 @@ Plug 'machakann/vim-highlightedyank'  " report yanked range
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'v0.0.82'}
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
 Plug 'dense-analysis/ale'
@@ -63,6 +64,7 @@ let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
 let g:indentLine_color_term = 160
 
+" ALE config
 let g:airline#extensions#ale#enabled = 1
 " Check Python files with flake8 and pylint.
 let b:ale_linters = ['flake8', 'pylint']
@@ -70,7 +72,7 @@ let g:ale_python_flake8_executable = 'python3'
 let g:ale_python_flake8_options = '-m flake8 --ignore E501'
 " Fix Python files with autopep8 and yapf.
 let b:ale_fixers = ['autopep8', 'yapf']
-" Disable warnings about trailing whitespace for Python files.
+" Disable trailing whitespace warnings for Python files.
 let b:ale_warn_about_trailing_whitespace = 1
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
@@ -78,10 +80,10 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_sign_error = 'E'
 let g:ale_sign_warning = 'W'
 
-" ale fix key binding
+" ALE key binding
 noremap <F9> :ALEFix <CR>
 
-colorscheme onehalfdark
+colorscheme danger_dark
 
 " Jump to the last position when reopening a file
 if has("autocmd")
@@ -97,7 +99,7 @@ autocmd BufEnter *
     \   Startify |
     \ endif
 
-" Ctrl-Left or Ctrl-Right to go to the previous or next tabs
+" F3 or F9 to go to the previous or next tabs
 nnoremap <F3> :tabprevious<CR>
 nnoremap <F9> :tabnext<CR>
 
@@ -112,8 +114,8 @@ hi HighlightedyankRegion cterm=reverse gui=reverse
 " set highlight duration time to 500 ms
 let g:highlightedyank_highlight_duration = 500
 
-" let g:airline_theme='deus'
-let g:airline_theme='onehalfdark'
+let g:airline_theme='deus'
+"let g:airline_theme='onehalfdark'
 " использовать пропатченные шрифты (должны быть установлены Agave Nerd Font)
 let g:airline_powerline_fonts = 1
 " включить управление табами
