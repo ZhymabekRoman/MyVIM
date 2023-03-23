@@ -42,17 +42,14 @@ set ts=4
 set shortmess+=c
 
 call plug#begin()
-" Plug 'sonph/onehalf', {'rtp': 'vim/'}  " theme
-Plug 'igorgue/danger'
+Plug 'KeitaNakamura/neodark.vim'
 Plug 'vim-airline/vim-airline'  " status and tabline
-Plug 'vim-airline/vim-airline-themes'  " theme for status and tabline
 Plug 'RRethy/vim-illuminate'  " highlight same word under cursor
 Plug 'preservim/nerdtree'  " file manager
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'machakann/vim-highlightedyank'  " report yanked range
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
 Plug 'neoclide/coc.nvim', {'branch': 'v0.0.82'}
 Plug 'mhinz/vim-startify'
 Plug 'Yggdroot/indentLine'
@@ -83,7 +80,8 @@ let g:ale_sign_warning = 'W'
 " ALE key binding
 noremap <F9> :ALEFix <CR>
 
-colorscheme danger_dark
+set termguicolors                " recommended
+colorscheme neodark
 
 " Jump to the last position when reopening a file
 if has("autocmd")
@@ -114,8 +112,7 @@ hi HighlightedyankRegion cterm=reverse gui=reverse
 " set highlight duration time to 500 ms
 let g:highlightedyank_highlight_duration = 500
 
-let g:airline_theme='deus'
-"let g:airline_theme='onehalfdark'
+let g:airline_theme='neodark'
 " использовать пропатченные шрифты (должны быть установлены Agave Nerd Font)
 let g:airline_powerline_fonts = 1
 " включить управление табами
@@ -123,11 +120,11 @@ let g:airline#extensions#tabline#enabled = 1
 " всегда показывать tabline
 let g:airline#extensions#tabline#tab_min_count = 0
 "" такое же поведение, как и в sublime: если файл с уникальным именем - показывается только имя, если встречается файл с таким же именем, отображается также и директория
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 " скрыть буферы
 let g:airline#extensions#tabline#show_buffers = 0
 " имя файла + расширение :help filename-modifiers
-let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#fnamemod = ':t'
 " для закрытия вкладки мышью (мышью!?)
 let g:airline#extensions#tabline#show_close_button = 1
 " убираем разделитель для вкладок
@@ -139,12 +136,6 @@ let g:airline#extensions#tabline#show_tab_nr = 1
 " показывать только номер вкладки
 let g:airline#extensions#tabline#tab_nr_type = 1
 
-
-" vim markdown plugin options - https://github.com/plasticboy/vim-markdown
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_json_frontmatter = 1
-let g:vim_markdown_edit_url_in = 'tab'
-let g:vim_markdown_folding_disabled = 1
 
 augroup illuminate_augroup
     autocmd!
@@ -303,5 +294,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Doesn't allow use Ctrl-Z (some bugs in fish)
 map <C-z> <Nop>
+
 " Disable quote concealing in JSON files
 let g:vim_json_conceal=0
