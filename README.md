@@ -3,8 +3,12 @@ My VIM config files
 
 ```bash
 # Exctract .vimrc file to home directory
-curl https://github.com/ZhymabekRoman/MyVIM/raw/main/.vimrc > ~/.vimrc
+curl https://raw.githubusercontent.com/ZhymabekRoman/MyVIM/main/.vimrc > ~/.vimrc
 
-# Install Python linters and code fixers:
+# Install coc.nvim plugins:
+vim -c "CocInstall coc-jedi coc-html coc-css coc-sh coc-snippets coc-go"
+
+# Install Python linters and code fixers (Optional):
+# TODO: migrate to ruff
 pip3 install yapf pylint flake8 black autopep8
 ```
