@@ -1,7 +1,3 @@
-" :CocInstall :CocInstall coc-jedi coc-html coc-css coc-sh coc-snippets
-" Open config file with :CocConfig and add:
-" "diagnostic.checkCurrentLine": true
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 filetype plugin on
