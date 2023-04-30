@@ -307,3 +307,7 @@ map <C-z> <Nop>
 
 " Disable quote concealing in JSON files
 let g:vim_json_conceal=0
+" Disable markdown text styling preview
+" Read more: https://vi.stackexchange.com/questions/7258/how-do-i-prevent-vim-from-hiding-symbols-in-markdown-and-json
+set conceallevel=0
+let g:indentLine_setConceal = 0
