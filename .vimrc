@@ -65,12 +65,10 @@ let g:indentLine_color_term = 160
 
 " ALE config
 let g:airline#extensions#ale#enabled = 1
-" Check Python files with flake8 and pylint.
-let b:ale_linters = ['flake8', 'pylint']
+let b:ale_linters = ['flake8', 'pylint', 'gofmt']
 let g:ale_python_flake8_executable = 'python3'
 let g:ale_python_flake8_options = '-m flake8 --ignore E501'
-" Fix Python files with autopep8 and yapf.
-let b:ale_fixers = ['autopep8', 'yapf']
+let b:ale_fixers = ['autopep8', 'yapf', 'gofmt']
 " Disable trailing whitespace warnings for Python files.
 let b:ale_warn_about_trailing_whitespace = 1
 let g:ale_echo_msg_error_str = 'E'
