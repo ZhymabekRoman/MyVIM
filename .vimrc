@@ -1,4 +1,3 @@
-" :CocInstall :CocInstall coc-jedi coc-html coc-css coc-sh coc-snippets
 " Open config file with :CocConfig and add:
 " "diagnostic.checkCurrentLine": true
 
@@ -57,6 +56,7 @@ Plug 'vim-airline/vim-airline'  " status and tabline
 Plug 'RRethy/vim-illuminate'  " highlight same word under cursor
 Plug 'preservim/nerdtree'  " file manager
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'ryanoasis/vim-devicons'
 Plug 'machakann/vim-highlightedyank'  " report yanked range
 Plug 'Raimondi/delimitMate'
 Plug 'godlygeek/tabular'
@@ -159,6 +159,18 @@ augroup illuminate_augroup
 augroup END
 let g:Illuminate_delay = 200
 let g:Illuminate_ftblacklist = ['nerdtree']
+
+" loading the plugin
+let g:webdevicons_enable = 1
+" adding the flags to NERDTree
+let g:webdevicons_enable_nerdtree = 1
+" adding to vim-airline's tabline
+let g:webdevicons_enable_airline_tabline = 1
+" adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
+" Can be enabled or disabled
+" adding to vim-startify screen
+let g:webdevicons_enable_startify = 1
 
 " Make trailing whitespace be flagged as bad.
 " Use the below highlight group when displaying bad whitespace is desired.

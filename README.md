@@ -6,7 +6,7 @@ My VIM config files
 curl https://raw.githubusercontent.com/ZhymabekRoman/MyVIM/main/.vimrc > ~/.vimrc
 
 # Install coc.nvim plugins:
-vim -c "CocInstall coc-jedi coc-html coc-css coc-sh coc-snippets coc-go coc-tabnine"
+vim -c "CocInstall coc-jedi coc-html coc-css coc-sh coc-go coc-tabnine"
 
 # Install Python linters and code fixers (Optional):
 # TODO: migrate to ruff
