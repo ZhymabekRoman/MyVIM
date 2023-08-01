@@ -1,3 +1,5 @@
+## Non active. Please use instead [dotconfig](https://github.com/ZhymabekRoman/dotconfig.git)
+
 # MyVIM
 My VIM config files
 
